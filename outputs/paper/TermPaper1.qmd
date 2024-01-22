@@ -12,9 +12,11 @@ bibliography: bibliography.bib
 ---
 
 ```{r}
-#### Work space setup ####
 #| message: false
 #| echo: false
+#| warning: false
+#### Work space setup ####
+
 
 ## Downloading and loading packages
 install.packages("tidyverse")
@@ -28,7 +30,6 @@ library("opendatatoronto")
 library("tidyverse")
 ```
 
-## Quarto
 
 ```{r}
 #### Reading the Data ####
