@@ -1,0 +1,53 @@
+---
+title: "Exploring the Statistics in the Cases of Motor Vehicle Thefts in the City of Toronto"
+title-block-banner: true
+author: Aaron Xiaozhou Liu
+date: today
+date-format: long
+abstract: "TODO"
+format: pdf
+toc: true
+number-sections: true
+bibliography: bibliography.bib
+---
+
+```{r}
+#### Work space setup ####
+#| message: false
+#| echo: false
+
+## Downloading and loading packages
+install.packages("tidyverse")
+install.packages("janitor")
+install.packages("opendatatoronto")
+
+library("janitor")
+library("knitr")
+library("lubridate")
+library("opendatatoronto")
+library("tidyverse")
+```
+
+## Quarto
+
+```{r}
+#### Reading the Data ####
+pkg <- 
+  search_packages('Theft from Motor Vehicle')
+
+pkgs <- 
+  list_package_resources(pkg$id)
+
+data <-
+  get_resource(pkgs[8:8,1:2]$id)
+
+write_csv(
+  x = data,
+  file = "Theft_from_Motor_Vehicle.csv"
+)
+
+```
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
