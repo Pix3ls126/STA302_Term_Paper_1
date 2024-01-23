@@ -4,7 +4,7 @@ title-block-banner: true
 author: Aaron Xiaozhou Liu
 date: today
 date-format: long
-abstract: "With Cars being one of the most common forms of transportation, motor related crimes are also on the rise. Within this never ending battle between law enforcement and the people who would commit such acts, we can find many patterns and connections between each individual case, as we see discover that new cars are more likely to be targetted rather than older cars, and the areas that have the highest likelihood of these crimes taking place are in the heart of Downtown Toronto and up in the Northwestern areas of the GTA."
+abstract: "With motor vehicles, such as cars, being one of the most common forms of transportation, motor related crimes are also on the rise. Within this never ending battle between law enforcement and the people who would commit such acts, we can find many patterns and connections between each individual case, as we see discover that new cars are more likely to be targetted rather than older cars, and the areas that have the highest likelihood of these crimes taking place are in the heart of Downtown Toronto and up in the Northwestern areas of the GTA."
 format: pdf
 toc: true
 number-sections: true
@@ -48,7 +48,7 @@ Throughout the rest of this paper, we will be delving into the statistics with r
 
 \newpage
 ## Data
-All data collection and analysis was done using statistical computing and data visualization program R [@R]. The data used for this paper is found in the OpenDataToronto library and downloaded using the R package opendatatoronto [@opendatatorontoR]. All the analysis was done using the R program and the following supporting packages tidyverse [@tidyverseR], Janitor [@JanitorR], dplyer [@dplyrR], ggplot2 [@ggplot2R], knitr [@KnitrR], readr [@readrR], and here [@hereR]. We will dive into more detail about the data collection, cleaning, and analysis in the following sections of the paper.
+All data collection and analysis was done using statistical computing and data visualization program R [@R]. The data used for this paper is found in the OpenDataToronto library and downloaded using the R package opendatatoronto [@opendatatorontoR]. All the analysis was done using the R program and the following supporting packages tidyverse [@tidyverseR], Janitor [@JanitorR], dplyer [@dplyrR], ggplot2 [@ggplot2R], knitr [@knitrR], readr [@readrR], and here [@hereR]. We will dive into more detail about the data collection, cleaning, and analysis in the following sections of the paper.
 
 ### Data collection and cleaning
 We retrieve the data used for our analysis from the database Open data Toronto and grab the `Theft from Motor Vehicle` package. With our data in hand, we can start with the cleaning and filtering for information that will be relevant for our study. The main columns that we will be looking at will be the occurrence date of the theft, police division, and the location and premise that the crime took place on. We will not be including the reported date, as I believe for the purposes of analysis, it will be more accurate to report on the day the crime occured rather than when the police were alerted. 
@@ -62,7 +62,6 @@ Another variable of interest for this study are the divisions. Across Toronto, t
 ### Occurrence Date
 The final field that we will be investigating is the date field, or more specifically, the occurrence date field. This date is the day that the theft would have taken place by the report of the victim. Using this field, I plan to compare the number of thefts throughout the years, and observe the trend of the total number of motor thefts by filtering the data by year, and then graphing them to compare them next to each other.
 
-\newpage
 ## Results
 In this section, we will be looking at the results of our research, looking at the visual aids that we have created, and observing the trends and pattern that occur within them.
 
@@ -101,7 +100,7 @@ cleaned_Theft_from_Motor_Vehicle |>
   labs(x = "Premise Type", y = "Number of Motor Thefts", title = 'Number of Motor Thefts by Premise Type') +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
-
+\newpage
 ### Occurences per Year
 The final statistic we will investigate is the number of motor thefts per year. 
 ```{r}
