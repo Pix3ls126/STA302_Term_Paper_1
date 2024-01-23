@@ -3,7 +3,7 @@
 # Author: Aaron Xiaozhou Liu
 # Date: January 22, 2024
 # Contact: aaronxiaozhou.liu@mail.utoronto.ca
-# Prerequisites: running 01-download_data.r
+# Prerequisites: running 01-download_data.R
 
 #### Workspace setup ####
 #install.packages("tidyverse")
@@ -15,7 +15,7 @@ library(janitor)
 # Read the raw data
 raw_motor_theft_data = 
   read_csv(
-    file = "inputs/raw_Theft_from_Motor_Vehicle.csv",
+    file = "inputs/data/raw_Theft_from_Motor_Vehicle.csv",
     show_col_types = FALSE
   )
 
@@ -35,14 +35,16 @@ Full_date <- as.Date(ISOdate(year = cleaned_motor_theft_data$occ_year,
 
 cleaned_motor_theft_data$full_occ_date <- Full_date
 
-# Combine two columns into one
-cleaned_motor_theft_data$location_and_premise_type <- paste(cleaned_motor_theft_data$location_type, "-",cleaned_motor_theft_data$premises_type)
-
 # Filtering cleaned dataset for the desired columns and saving writing into a csv
-filter_cleaned_motor_theft_data <- select(cleaned_motor_theft_data, event_unique_id, full_occ_date, occ_day, occ_month, occ_year, division, location_and_premise_type)
+filter_cleaned_motor_theft_data <- select(cleaned_motor_theft_data, event_unique_id, full_occ_date, occ_day, occ_month, occ_year, division, premises_type)
+
+# Filtering out redundant data
+filter_cleaned_motor_theft_data_past_2014 <-
+  filter_cleaned_motor_theft_data %>%
+    filter(occ_year > 2013)
 
 write_csv(
-  x = dataset,
-  file = "inputs/cleaned_Theft_from_Motor_Vehicle.csv"
+  x = filter_cleaned_motor_theft_data_past_2014,
+  file = "inputs/data/cleaned_Theft_from_Motor_Vehicle.csv"
 )
 

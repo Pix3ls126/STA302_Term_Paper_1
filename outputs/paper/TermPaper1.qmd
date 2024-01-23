@@ -4,7 +4,7 @@ title-block-banner: true
 author: Aaron Xiaozhou Liu
 date: today
 date-format: long
-abstract: "TODO"
+abstract: "With Cars being one of the most common forms of transportation, motor related crimes are also on the rise. Within this never ending battle between law enforcement and the people who would commit such acts, we can find many patterns and connections between each individual case, as we see discover that new cars are more likely to be targetted rather than older cars, and the areas that have the highest likelihood of these crimes taking place are in the heart of Downtown Toronto and up in the Northwestern areas of the GTA."
 format: pdf
 toc: true
 number-sections: true
@@ -17,38 +17,130 @@ bibliography: bibliography.bib
 #| warning: false
 #### Work space setup ####
 
-
 ## Downloading and loading packages
-install.packages("tidyverse")
-install.packages("janitor")
-install.packages("opendatatoronto")
+#install.packages("tidyverse")
+#install.packages("janitor")
+#install.packages("opendatatoronto")
 
 library("janitor")
-library("knitr")
-library("lubridate")
+library("dplyr")
+library("here")
 library("opendatatoronto")
 library("tidyverse")
+library("knitr")
+library("readr")
+
+#### Reading cleaned data ####
+cleaned_Theft_from_Motor_Vehicle <-
+  read_csv(
+    file = here("inputs/data/cleaned_Theft_from_Motor_Vehicle.csv"),
+    show_col_types = FALSE
+  )
+
 ```
+\newpage
+## Introduction
+Motor vehicle thefts and other related crimes have been a plague around the world, and the city of Toronto is no exception. Each year, there are tens of thousands of such cases, and it is an ongoing battle for law enforcement to combat these cases. To make matters worse, Auto thefts have been spiking in Toronto in the recent years with 9600 vehicles being stolen in 2022, a 300% increase compared to 2015, and doubled compared to the total in 2021 [@Bloomberg]. Unfortunately, these the growth of these numbers don't appear to be slowing down anytime soon, as there were a reported 9747 known stolen vehicles reported in November of 2023 [@ctvnews], with reports saying that over 30 cars are stolen each day [@Torontosun].
 
+Cars are one of the most common modes of transportation, and a many people, including myself, rely on it for transportation in our day to day lives for getting to work, school, etc. While public transportation such as Subways, streetcars and buses are a good alternative, personally nothing feels as convenient as jumping in a car and being able to drive directly to where you want to go without having to transfer from one bus to another for example. Unfortunately, this means that they also become one of the most common targets for criminals to hit. Car theft isn't limited to just stealing vehicles either, some criminals may decide to break a car window and steal whatever valuables they find inside. Even if nothing is stolen, the owner of the car still must foot the cost of repairing the window while the criminals are remain at large. The scale of the of the issue around auto theft requires a lot of coordination, as federal, provincial, municipal, border services, and auto manufactures must all work together to help combat this as stated by the Public Safety Minister [@Bloomberg]. The danger of your car being stolen is always very unsettling, and it is one of the top priorities of the police officers fighting against auto theft [@CBC].
 
+Throughout the rest of this paper, we will be delving into the statistics with regards to motor vehicle related thefts and observe any trends we can find. In the data and results sections of this paper, we examine and analyze the information reported by the Toronto Police Services by downloading and cleaning the data sets. After that, we will look into the results sections to look for trends and other insights that can be uncovered from our research, and finally discuss and summarize all of our findings in the conclusion.
+
+\newpage
+## Data
+All data collection and analysis was done using statistical computing and data visualization program R [@R]. The data used for this paper is found in the OpenDataToronto library and downloaded using the R package opendatatoronto [@opendatatorontoR]. All the analysis was done using the R program and the following supporting packages tidyverse [@tidyverseR], Janitor [@JanitorR], dplyer [@dplyrR], ggplot2 [@ggplot2R], knitr [@KnitrR], readr [@readrR], and here [@hereR]. We will dive into more detail about the data collection, cleaning, and analysis in the following sections of the paper.
+
+### Data collection and cleaning
+We retrieve the data used for our analysis from the database Open data Toronto and grab the `Theft from Motor Vehicle` package. With our data in hand, we can start with the cleaning and filtering for information that will be relevant for our study. The main columns that we will be looking at will be the occurrence date of the theft, police division, and the location and premise that the crime took place on. We will not be including the reported date, as I believe for the purposes of analysis, it will be more accurate to report on the day the crime occured rather than when the police were alerted. 
+
+### Premise type
+Toronto is a massive city with many varying road types and different neighborhoods. The dataset the premises of the location (ie house, commercial area). Originally these were two different columns in the data set, but I've decided to link them into one as they are closely related to each other. Given the Premise type data, we can find out at what kind of locations these motor thefts are more likely to take place at by gathering the data of the number of reports at the respective locations.
+
+### Division
+Another variable of interest for this study are the divisions. Across Toronto, there are many different police divisions that protect and survey their own designated areas. Using this information, we can compare between different divisions and observe the locations that get more occurrences and reports of theft than others, and extrapolate this information to conclude that these are hot-spots, meaning it is more likely for motor thefts to happen at these locations
+
+### Occurrence Date
+The final field that we will be investigating is the date field, or more specifically, the occurrence date field. This date is the day that the theft would have taken place by the report of the victim. Using this field, I plan to compare the number of thefts throughout the years, and observe the trend of the total number of motor thefts by filtering the data by year, and then graphing them to compare them next to each other.
+
+\newpage
+## Results
+In this section, we will be looking at the results of our research, looking at the visual aids that we have created, and observing the trends and pattern that occur within them.
+
+### Occurrences by Division.
 ```{r}
-#### Reading the Data ####
-pkg <- 
-  search_packages('Theft from Motor Vehicle')
+#| label: fig-occurrences_by_Division
+#| fig-cap: Number of Motor thefts by Police division
+#| echo: false
+#| message: false
+#| warning: false
 
-pkgs <- 
-  list_package_resources(pkg$id)
+# Based on code from https://tellingstorieswithdata.com/03-workflow.html#tutorial
 
-data <-
-  get_resource(pkgs[8:8,1:2]$id)
+cleaned_Theft_from_Motor_Vehicle |>
+  ggplot(aes(x = division)) +
+  geom_bar() +
+  labs(x = "Police Division #", y = "Number of Motor Thefts", title = 'Number of Motor Thefts per Police Division') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+From the above, @fig-occurrences_by_Division, we see that the three divisions with the highest occurrences are D32, D23, and D51. The area that D32 covers the area North of Downtown Toronto, around the North York region [@D32]. D23 Covers the the Northwest Corner of the GTA, directly west of D32 [@D23]. Finally, D51 is located at the center of downtown Toronto [@D51]. D51 being located in downtown Toronto is where the most people are, and where the most cars would be located, as the higher concentration of people means more people driving in and out, making it a hot zone for criminals to find targets. On the other hand, areas like D32 and D23 are more suburban and quieter. For these opposite reasons, it is more likely for criminals to strike as there would be less people out at any time to catch them in the act. Based on information from [@TorontoCrimeMap], the ares with higher crime rates, correlate with the areas that fall under the jurisdictions of the previously mentioned police divisions. 
 
-write_csv(
-  x = data,
-  file = "Theft_from_Motor_Vehicle.csv"
-)
+### Occurrences by Premise
+We have seen the number of crimes committed grouped by division, now we switch focuses and try grouping up occurrences by premise type from @fig-Occurrences_by_premise_type, the majority of these crimes are reported to have taken place outside. Outside is a very loose definition, but it can be inferred that this means locations that would not fall under the other categories, such as outdoor parking lot. We see that a large number of these crimes also take place at houses and apartments. From this information we can conclude that thieves like to target people's homes and where they live as it is likely that no one would be around to spot them. This would fall in line with the findings from @fig-occurrences_by_Division, where outside of D51, both D23 and D32 cover more suburban areas where neighborhoods would be.
+```{r}
+#| label: fig-Occurrences_by_premise_type
+#| fig-cap: Number of Motor thefts by premise type
+#| echo: false
+#| message: false
+#| warning: false
 
+# Based on code from https://tellingstorieswithdata.com/03-workflow.html#tutorial
+
+cleaned_Theft_from_Motor_Vehicle |>
+  ggplot(aes(x = premises_type)) +
+  geom_bar() +
+  labs(x = "Premise Type", y = "Number of Motor Thefts", title = 'Number of Motor Thefts by Premise Type') +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-## Running Code
+### Occurences per Year
+The final statistic we will investigate is the number of motor thefts per year. 
+```{r}
+#| label: fig-Occurrences_by_year
+#| fig-cap: Number of Motor thefts by year
+#| echo: false
+#| message: false
+#| warning: false
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+# Filter dates to 2014
+cleaned_Theft_from_Motor_Vehicle_2014 <-
+  cleaned_Theft_from_Motor_Vehicle %>%
+    filter(occ_year > 2013)
+
+# Based on code from https://tellingstorieswithdata.com/03-workflow.html#tutorial
+
+cleaned_Theft_from_Motor_Vehicle |>
+  ggplot(aes(x = occ_year)) +
+  geom_bar() +
+  labs(x = "Year", y = "Number of Motor Thefts", title = 'Number of Motor Thefts per Year') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+The above graph really visualizes the trend of the increase in the number of car thefts, and we can observe a trend of constant growth in number of cases from 2016 all the way to 2020. This is in line with the previous statements of car thefts being on a constant rise. Contrary to the statement made in the introduction that crimes peaks in 2022 [@Bloomberg], we can see that the peak is in 2020. This could likely be due to the fact that 2020 and 2021 were the heights of covid, and since everyone was stuck indoors, fewer and fewer newer vehicles were available due to supply-chain issues stemming from the pandemic. The following year, once isolation restrictions were loosened, there was surge in the automobile market, which correlates with the rise in cases in the year 2022[@CBC2].
+
+## Discussion
+Overall in our data explorations, we have seen many different correlations regarding the patterns within these recurring motor vehicle thefts. Firstly, in @fig-occurrences_by_Division, based on the information from the graph, with D32, D23, and D51 having the highest amounts of reports. Those areas being ranked as having higher crime rates makes sense as motor theft falls under that category.
+
+In the premise section of our research, it indicates that the greater majority of thefts happen outside, most likely in areas with a higher car density, compared to the next most common places, which are houses, then followed by apartments. Being in an area with a higher concentration of cars means more targets for the perpetrators to choose from. It is likely that with more cars, there is a higher chance that there will be more expensive cars or newer car models, which would be more enticing targets for thieves. This correlates with the data from @fig-occurrences_by_Division and @fig-Occurrences_by_year. As we see the drop off in 2020, where presumably less cars are not only on the road, less newer cars are being manufactured and more older cars being on the road. These older cars are most likely less desirable, as a car's value depreciates very rapidly past the first year [@ReDriven]. In the following year in 2022, where demand for cars grew again as previously stated, so did the rate of motor vehicle thefts, as there would be more new model vehicles on the road at that point.
+
+Finally, for the occurrences per year, @fig-Occurrences_by_year, as previously stated in the introduction, the rate of auto and motor thefts have been on a consistent rise, and we can clearly see that in the graph from the years 2016 to 2020. There is steady increase in the occurrences until it peaks at 2020 and then falls at 2021. The inferences that can be made here is that it is around 2016 when these kinds of thefts became profitable, as it wasn't just single criminals committing these acts, there are whole organized crime groups behind these actions [@CBC2]. This trend would continue until 2020, where the unexpected effects of the corona virus would hit, largely crippling life as we knew it as everyone was forced to isolate in a combined effort to limit the transmission of the virus. During this period of time, it would be less profitable to steal older model cars, as we have discussed previously already, and we see the dip in reports for a year. Eventually, the report numbers pick up again as society slowly goes back to normal in the year 2023
+
+### Shortcomings
+While there were many points of interest to explore the case from, the scope of some of these explorations were rather limited. In the case of premises, there were only a small amount of different premises, and one of the premise fields, "outside", is too general and doesn't give very much information to make any interpretations from. I believe it would be beneficial to be more specific about premise types, as it would help pinpoint locations of thefts more precisely.
+
+Some things that I believe would be beneficial to the data set in the future is to include more information regarding the thefts. Information such as car model could prove useful, as certain cars are more likely to be stolen than others due to their resale value in different countries [@CBC2]. Furthermore, I believe the data set would benefit from having a location field to specifically say what area the crime occurred. Currently the only location information we have is the division that the crime was reported, and we use that to extrapolate an area where it could have taken place. A more precise location field would help with finding patterns behind these crimes.
+
+\newpage
+## Conclusion
+Throughout this paper, we have analyzed the patterns of motor thefts in the City of Toronto through multiple lens and perspectives. Through these different angles, we have discovered some patterns within these attacks, such as the locations where these kinds of actions would most likely take place, and also the trend over time, as crime organizations are more likely to target newer model cars rather than old. These discoveries helps us and law enforcement fight back against these incidents, as only through information and coordination will we be able to combat this never ending battle and protect the security of our motor vehicles. Future research into this area with new data and more fields of information would prove largely beneficial in finding even more connections between each individual case and draw on stronger conclusions and inferences.
+
+\newpage
+## Bibliography

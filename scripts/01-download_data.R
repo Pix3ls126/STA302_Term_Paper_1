@@ -24,6 +24,6 @@ dataset <-
 #Saving the dataset
 write_csv(
   x = dataset,
-  file = "inputs/raw_Theft_from_Motor_Vehicle.csv"
+  file = "inputs/data/raw_Theft_from_Motor_Vehicle.csv"
 )
   
