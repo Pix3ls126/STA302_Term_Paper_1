@@ -4,6 +4,8 @@
 
 This paper aims to gather and analyze the data from the Toronto Police Services and look for any patterns or relations in our discoveries
 
+No LLMs were used at all throughout this entire paper.
+
 ## File Structure
 
 -   `inputs` contains the raw and cleaned data that will be used for analysis
