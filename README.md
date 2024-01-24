@@ -16,4 +16,4 @@ No LLMs were used at all throughout this entire paper.
 
 1.  Run `scripts/01-download_data.R` to get the raw data
 2.  Run `scripts/02-cleaning_data.R`to clean the raw data
-3.  Run `outputs/paper/TermPaper1.qmd` to generate the paper pdf
+3.  Run `outputs/paper/motor_vehicle_theft.qmd` to generate the paper pdf
