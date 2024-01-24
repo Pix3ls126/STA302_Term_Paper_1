@@ -4,7 +4,7 @@ title-block-banner: true
 author: Aaron Xiaozhou Liu
 date: today
 date-format: long
-abstract: "With motor vehicles, such as cars, being one of the most common forms of transportation, motor related crimes are also on the rise. Within this never ending battle between law enforcement and the people who would commit such acts, we can find many patterns and connections between each individual case, as we see discover that new cars are more likely to be targetted rather than older cars, and the areas that have the highest likelihood of these crimes taking place are in the heart of Downtown Toronto and up in the Northwestern areas of the GTA."
+abstract: "With motor vehicles, such as cars, being one of the most common forms of transportation, motor related crimes are also on the rise. Within this never ending battle between law enforcement and the people who would commit such acts, we can find many patterns and connections between each individual case, as we discover that new cars are more likely to be targetted rather than older cars, and the areas that have the highest likelihood of these crimes taking place are in the heart of Downtown Toronto and up in the Northwestern areas of the GTA."
 format: pdf
 toc: true
 number-sections: true
